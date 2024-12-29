@@ -20,10 +20,19 @@ h1 {
     overflow: hidden;
 }
 
-#player, #target {
+#player {
     width: 30px;
     height: 30px;
     position: absolute;
+}
+
+#building {
+    background-color: green;
+    position: absolute;
+    width: 200px;
+    height: 500px;
+    top: 250px;
+    left: 300px;
 }
 
 #player {
@@ -32,11 +41,8 @@ h1 {
     left: 0;
 }
 
-#target {
-    background-color: red;
-    top: 200px;
-    left: 200px;
-}
+
+
 
 #score {
     font-size: 18px;
