@@ -71,3 +71,18 @@ function distanceBetweenRectangles(x1, y1, w1, h1, x2, y2, w2, h2) {
     // Return the Euclidean distance if the rectangles are diagonally separated
     return Math.sqrt(dx * dx + dy * dy);
 }
+
+/**
+* Calculate the position of an object under gravity based on frame rate.
+*
+* @param {number} gravity - Gravitational acceleration (e.g., 9.8 m/s²).
+* @param {number} frameRate - Frame rate (frames per second).
+* @param {number} initialVelocity - The initial velocity of the object (m/s).
+* @param {number} initialPosition - The initial position of the object (m), default is 0.
+* @returns {number} The new position of the object after one frame.
+*/
+function applyGravity(frameRate, initialVelocity, initialPosition = 0) {
+    const timeStep = 1 / frameRate; // Time per frame in seconds
+    const newPosition = initialPosition + initialVelocity * timeStep + 0.5 * 10 * Math.pow(timeStep, 2);
+    return newPosition;
+}
