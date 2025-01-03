@@ -26,15 +26,17 @@ class Building {
         building.style.top = this.Position.y + "px";
         building.style.backgroundColor = "green";
         building.style.position = "absolute";
+        building.style.backgroundImage = `url(${this.background})`;
+        building.style.backgroundRepeat = "repeat"; // Repeat the background image
+        building.style.backgroundSize = "auto"; // Ensure the image is not stretched
 
-        building.innerHTML = `<img src="${this.background}">`;
-        const img = building.querySelector("img");
+        // building.innerHTML += `<img src="${this.background}">`;
+        // const img = building.querySelector("img");
 
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
-        
-
+        // img.style.backgroundRepeat = "repeat";
+        // img.style.backgroundSize = "auto";
+        //img.style.width = "100%";
+        //img.style.height = "100%"; 
 
     }
     

@@ -32,6 +32,9 @@ class Game{
         let building4 = new Building(this, new Rectangle(800, 200, 50, 500), "assets/Background/Purple.png");
         building4.inshelizeBuilding();
 
+        this.fruit1 = new Fruit(this, new Rectangle(100, 200, 32, 32), "apple");
+        this.fruit1.inshelizeFruit();
+
 
 
         this.buildings.push(building1);
@@ -40,7 +43,7 @@ class Game{
         this.buildings.push(building3);
         this.buildings.push(building4);
 
-        this.player = new Player(this, new Rectangle(200, 0, 30, 30), new velocity(0, 0));
+        this.player = new Player(this, new Rectangle(200, 0, 24, 32), new velocity(0, 0));
         this.player.inshelizePlayer();
 
     }
@@ -54,6 +57,9 @@ class Game{
             for(let building of this.buildings){
                 building.buildingLoop();
             }
+
+            this.fruit1.fruitLoop(this.player.Position);
+            
         }
     }
 }

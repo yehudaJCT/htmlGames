@@ -1,64 +1,64 @@
 // The Player class is responsible for managing a player's behavior in the game.
 class Player {
-    static t = 0;
 
     // Constructor to initialize the player with the GameInstance, position, and velocity
     constructor(GameInstance, Position, Velocity) {
-        this.GameInstance = GameInstance; // The game instance this player belongs to
-        this.Position = Position;         // The current position of the player
-        this.Velocity = Velocity;         // The current velocity of the player
+        this.GameInstance = GameInstance;
+        this.Position = Position;
+        this.Velocity = Velocity;
+        this.isPlayerAlive = true;
 
-        this.move = {
-            moveSped: 6,                  
-            acceleration: 1,             // The acceleration of the player's movement           
-        }
+        // Animation properties
+        //this.spriteSheet = new Image();
+        this.spriteSheet = "assets/VirtualGuy/Idle.png"; // Set your sprite sheet path here
+        this.frameWidth = 32;  // Width of one frame in your sprite sheet
+        this.frameHeight = 32; // Height of one frame in your sprite sheet
+        this.currentFrame = 0; // Track current frame of animation
+        this.animationSpeed = 10; // Number of frames per second
+        this.frameTimer = 0; // Timer to manage frame switching
 
-        this.jump = {                     // Jumping behavior
-            jumpPower: 12,                // The power of the player's jump
-            canjump: false,               // Flag to check if the player can jump
-        }
-
-        this.gravity = {
-            gravityPower: 0.5,
-            affectedByGravity: true              // The power of gravity
-        }              
-
-        this.isPlayerAlive = true;        // Flag to check if the player is alive
+        this.move = { moveSped: 5, acceleration: 1 };
+        this.jump = { jumpPower: 10, canjump: false };
+        this.gravity = { gravityPower: 0.5, affectedByGravity: true };
     }
 
     // Method to initialize the player on the screen
     inshelizePlayer() {
         // Generate unique IDs
         const playerId = `player`;
-        const nextPositionId = `nextPosition`; // For debugging purposes
+        //const nextPositionId = `nextPosition`; // For debugging purposes
 
         // Add nextPosition and player elements to the DOM
-        this.GameInstance.element.innerHTML += `<div id="${nextPositionId}"></div>`; // For debugging purposes
+        //this.GameInstance.element.innerHTML += `<div id="${nextPositionId}"></div>`; // For debugging purposes
         this.GameInstance.element.innerHTML += `<div id="${playerId}"></div>`;
 
-        this.HTMLnextPosition = document.getElementById(nextPositionId); // For debugging purposes
+        //this.HTMLnextPosition = document.getElementById(nextPositionId); // For debugging purposes
         this.player = document.getElementById(playerId);
 
         // Style nextPosition For debugging purposes
-        this.HTMLnextPosition.textContent = "(0,0)";
-        this.HTMLnextPosition.style.width = this.Position.width + "px";
-        this.HTMLnextPosition.style.height = this.Position.height + "px";
-        this.HTMLnextPosition.style.left = this.Position.x + "px";
-        this.HTMLnextPosition.style.top = this.Position.y + "px";
-        this.HTMLnextPosition.style.backgroundColor = "yellow";
-        this.HTMLnextPosition.style.position = "absolute";
-        this.HTMLnextPosition.style.opacity = 0.5;
-        this.HTMLnextPosition.style.zIndex = 2; // Ensure it's below the player
-        this.HTMLnextPosition.style.pointerEvents = "none"; // Avoid blocking interactions
+        // this.HTMLnextPosition.textContent = "(0,0)";
+        // this.HTMLnextPosition.style.width = this.Position.width + "px";
+        // this.HTMLnextPosition.style.height = this.Position.height + "px";
+        // this.HTMLnextPosition.style.left = this.Position.x + "px";
+        // this.HTMLnextPosition.style.top = this.Position.y + "px";
+        // this.HTMLnextPosition.style.backgroundColor = "yellow";
+        // this.HTMLnextPosition.style.position = "absolute";
+        // this.HTMLnextPosition.style.opacity = 0.5;
+        // this.HTMLnextPosition.style.zIndex = 2; // Ensure it's below the player
+        // this.HTMLnextPosition.style.pointerEvents = "none"; // Avoid blocking interactions
 
         // Style player
         this.player.style.width = this.Position.width + "px";
         this.player.style.height = this.Position.height + "px";
         this.player.style.left = this.Position.x + "px";
         this.player.style.top = this.Position.y + "px";
-        this.player.style.backgroundColor = "red";
+        this.player.style.backgroundColor = "yellow";
         this.player.style.position = "absolute";
-        this.player.style.zIndex = 1; // Ensure it's above nextPosition
+        //this.player.style.zIndex = 1; // Ensure it's above nextPosition
+        this.player.style.backgroundImage = `url(${this.spriteSheet})`; // Set the sprite sheet
+        //this.player.style.backgroundRepeat = "no-repeat"; // Repeat the background image
+        //this.player.style.backgroundSize = "auto"; // Ensure the image is not stretched
+        //this.player.style.backgroundPosition = "32px 0px"; // Initial position of the sprite sheet
     }
 
     // The main game loop for the player that handles movement and gravity
@@ -81,6 +81,20 @@ class Player {
         if(!this.isPlayerAlive){
             this.gameOver();
         }
+
+        this.updateAnimation(); // Update the player's animation
+    }
+
+    updateAnimation() {
+        // Update the frame timer
+        this.frameTimer++;
+        if(this.frameTimer >= this.GameInstance.frameRate / this.animationSpeed){
+            this.frameTimer = 0;
+            this.currentFrame = (this.currentFrame + 1) % 11;
+        }
+
+        // Update the player's sprite position in the sprite sheet
+        this.player.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + 4}px 0px`;
     }
 
     // Function to move the player and check for collisions with other rectangles
@@ -95,9 +109,9 @@ class Player {
         );
 
         // For debugging purposes
-        this.HTMLnextPosition.textContent = `(${this.Velocity.x},${this.Velocity.y})`;
-        this.HTMLnextPosition.style.left = `${nextPosition.x}px`;
-        this.HTMLnextPosition.style.top = `${nextPosition.y}px`;
+        //this.HTMLnextPosition.textContent = `(${this.Velocity.x},${this.Velocity.y})`;
+        //this.HTMLnextPosition.style.left = `${nextPosition.x}px`;
+        //this.HTMLnextPosition.style.top = `${nextPosition.y}px`;
 
         if (nextPosition.y >= this.GameInstance.gameHeight) {
             this.isPlayerAlive = false;
