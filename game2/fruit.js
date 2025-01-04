@@ -3,6 +3,7 @@ let fruits = {
     "cherrie": "assets/Fruits/Cherries.png",
     "origin": "assets/Fruits/Orange.png",
     "strawberry": "assets/Fruits/Strawberry.png",
+    "test" : "assets/VirtualGuy/Idle.png"
 }
 
 
@@ -38,17 +39,13 @@ class Fruit {
         //this.fruit.style.backgroundColor = "red";
         this.fruit.style.position = "absolute";
         this.fruit.style.backgroundImage = `url(${this.background})`;
-        //this.fruit.style.backgroundPosition = "-256px 0px"; // Start at the first frame
-        //this.fruit.style.backgroundRepeat = "no-repeat"; // Repeat the background image
-        //this.fruit.style.backgroundSize = "auto"; // Ensure the image is not stretched
+        this.fruit.style.backgroundRepeat = "no-repeat";
+        this.fruit.style.backgroundSize = "auto"; // Or adjust based on your sprite sheet
+        this.fruit.style.backgroundPosition = "-16px 0px"; // Starting position
+        this.fruit.style.backgroundPosition = "0px 0px"; 
     }
 
     fruitLoop(playerPosition) {
-        // Check for collision with the player
-        // if (this.Position.checkCollision(playerPosition)) {
-        //     console.log("Collision detected");
-        //     //this.removeFruit();
-        // }
         this.updateAnimation();
     }
 
@@ -61,12 +58,9 @@ class Fruit {
         }
 
         // Update the player's sprite position in the sprite sheet
-        console.log(`-${this.currentFrame * this.frameWidth}px 0px`);
-        this.fruit.style.backgroundPosition = `-${this.currentFrame * this.frameWidth}px 0px`;
-    }
+        this.fruit.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + this.frameShift}px 0px`;
 
-    // removeFruit() {
-    //     // Remove the fruit from the DOM
-    //     this.fruit.remove();
-    // }
+        //console.log(this.fruit.style);
+
+    }
 }
