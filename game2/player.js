@@ -1,5 +1,6 @@
 // The Player class is responsible for managing a player's behavior in the game.
 class Player {
+    static playerId = 0;
 
     // Constructor to initialize the player with the GameInstance, position, and velocity
     constructor(GameInstance, Position, Velocity) {
@@ -15,7 +16,9 @@ class Player {
         this.frameHeight = 32; // Height of one frame in your sprite sheet
         this.currentFrame = 0; // Track current frame of animation
         this.animationSpeed = 10; // Number of frames per second
-        this.frameTimer = 0; // Timer to manage frame switching
+        this.frameCount = 11; // Total number of frames in the sprite sheet
+        this.frameTimer = 0; // Frame timer to control the animation speed
+        this.frameShift = 4; // Shift the frame to the right
 
         this.move = { moveSped: 5, acceleration: 1 };
         this.jump = { jumpPower: 10, canjump: false };
@@ -25,8 +28,9 @@ class Player {
     // Method to initialize the player on the screen
     inshelizePlayer() {
         // Generate unique IDs
-        const playerId = `player`;
+        const playerId = `player${Player.playerId}`;
         //const nextPositionId = `nextPosition`; // For debugging purposes
+        Player.playerId++;
 
         // Add nextPosition and player elements to the DOM
         //this.GameInstance.element.innerHTML += `<div id="${nextPositionId}"></div>`; // For debugging purposes
@@ -90,11 +94,11 @@ class Player {
         this.frameTimer++;
         if(this.frameTimer >= this.GameInstance.frameRate / this.animationSpeed){
             this.frameTimer = 0;
-            this.currentFrame = (this.currentFrame + 1) % 11;
+            this.currentFrame = (this.currentFrame + 1) % this.frameCount;
         }
 
         // Update the player's sprite position in the sprite sheet
-        this.player.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + 4}px 0px`;
+        this.player.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + this.frameShift}px -6px`;
     }
 
     // Function to move the player and check for collisions with other rectangles
@@ -103,10 +107,15 @@ class Player {
         let nextPosition = new Rectangle(
             Math.min(this.GameInstance.gameWidth - this.Position.width, Math.max(0, this.Position.x + this.Velocity.x)),
             //Math.min(this.GameInstance.gameHeight - this.Position.height, Math.max(0, this.Position.y + this.Velocity.y)),
-            Math.max(0, this.Position.y + this.Velocity.y),
+            this.Position.y + this.Velocity.y,
             this.Position.width,
             this.Position.height
         );
+
+        if(nextPosition.y < 0){
+            nextPosition.y = 0;
+            this.Velocity.y = 0;
+        }
 
         // For debugging purposes
         //this.HTMLnextPosition.textContent = `(${this.Velocity.x},${this.Velocity.y})`;
@@ -169,8 +178,8 @@ class Player {
     }
 
     gameOver() {
-        this.Position.x = 100;
-        this.Position.y = 0;
+        this.Position.x = 150;
+        this.Position.y = 200;
         this.Velocity.x = 0;
         this.Velocity.y = 0;
         this.isPlayerAlive = true;

@@ -9,15 +9,16 @@ let fruits = {
 
 class Fruit {
     static fruitid = 0;
+
     constructor(GameInstance, Position, fruit) {
         this.GameInstance = GameInstance;
         this.Position = Position;
 
         this.background = fruits[fruit]; // Background image of the building
-        this.animationSpeed = 5; // Number of frames to wait before updating the sprite
         this.frameWidth = 32; // Width of each frame in the sprite sheet
         this.frameHeight = 32; // Height of each frame in the sprite sheet
         this.currentFrame = 0; // Current frame of the sprite sheet
+        this.animationSpeed = 20; // Number of frames to wait before updating the sprite
         this.frameCount = 17; // Total number of frames in the sprite sheet
         this.frameTimer = 0; // Frame timer to control the animation speed
         this.frameShift = 0; // Shift the frame to the right
@@ -39,10 +40,8 @@ class Fruit {
         //this.fruit.style.backgroundColor = "red";
         this.fruit.style.position = "absolute";
         this.fruit.style.backgroundImage = `url(${this.background})`;
-        this.fruit.style.backgroundRepeat = "no-repeat";
-        this.fruit.style.backgroundSize = "auto"; // Or adjust based on your sprite sheet
-        this.fruit.style.backgroundPosition = "-16px 0px"; // Starting position
-        this.fruit.style.backgroundPosition = "0px 0px"; 
+        // this.fruit.style.backgroundRepeat = "no-repeat";
+        // this.fruit.style.backgroundSize = "auto"; // Or adjust based on your sprite sheet
     }
 
     fruitLoop(playerPosition) {
@@ -60,7 +59,7 @@ class Fruit {
         // Update the player's sprite position in the sprite sheet
         this.fruit.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + this.frameShift}px 0px`;
 
-        //console.log(this.fruit.style);
+        console.log(this.fruit.style.backgroundPosition);
 
     }
 }
