@@ -1,7 +1,3 @@
-//========================================================================
-//                  Initialization parameters                   
-//========================================================================
-
 class Building {
     static buildingid = 0;
 
@@ -11,54 +7,32 @@ class Building {
         this.background = background; // Background image of the building
     }
 
-    inshelizeBuilding() {
+    initializeBuilding() {
         // Generate a unique ID based on the current timestamp
         const uniqueId = `building-${Building.buildingid}`;
         Building.buildingid++;
     
         // Add the building to the DOM with the unique ID
-        this.GameInstance.element.innerHTML += `<div id="${uniqueId}"></div>`;
-        const building = document.getElementById(uniqueId);
+        //this.GameInstance.element.innerHTML += `<div id="${uniqueId}"></div>`;
+        //const building = document.getElementById(uniqueId);
 
-        building.style.width = this.Position.width + "px";
-        building.style.height = this.Position.height + "px";
-        building.style.left = this.Position.x + "px";
-        building.style.top = this.Position.y + "px";
-        building.style.backgroundColor = "green";
-        building.style.position = "absolute";
-        building.style.backgroundImage = `url(${this.background})`;
-        building.style.backgroundRepeat = "repeat"; // Repeat the background image
-        building.style.backgroundSize = "auto"; // Ensure the image is not stretched
+        this.building = document.createElement("div");
+        this.building.id = this.uniqueId;
 
-        // building.innerHTML += `<img src="${this.background}">`;
-        // const img = building.querySelector("img");
+        this.building.style.width = this.Position.width + "px";
+        this.building.style.height = this.Position.height + "px";
+        this.building.style.left = this.Position.x + "px";
+        this.building.style.top = this.Position.y + "px";
+        this.building.style.backgroundColor = "green";
+        this.building.style.position = "absolute";
+        this.building.style.backgroundImage = `url(${this.background})`;
+        this.building.style.backgroundRepeat = "repeat"; // Repeat the background image
+        this.building.style.backgroundSize = "auto"; // Ensure the image is not stretched
 
-        // img.style.backgroundRepeat = "repeat";
-        // img.style.backgroundSize = "auto";
-        //img.style.width = "100%";
-        //img.style.height = "100%"; 
-
+        // Append the fruit to the game area
+        this.GameInstance.element.appendChild(this.building);
     }
     
     buildingLoop() {
-        // // Update other game elements
-        // moveBuilding(-1, 0);
-
-        // if (buildingPosition.x < -buildingPosition.width) {
-        //     buildingPosition.x = 470;
-        // }
-    }
-
-    moveBuilding(x, y) {
-        this.Position.x = this.Position.x + x;
-        this.Position.y = this.Position.y + y;
-
-        building.style.left = `${this.Position.x}px`;
-        building.style.top = `${this.Position.y}px`;
-    }
-
-    endTask() {
-        // Remove the building from the screen
-        this.GameInstance.element.innerHTML = "";
     }
 }

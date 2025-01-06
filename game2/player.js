@@ -1,6 +1,5 @@
 // The Player class is responsible for managing a player's behavior in the game.
 class Player {
-    static playerId = 0;
 
     // Constructor to initialize the player with the GameInstance, position, and velocity
     constructor(GameInstance, Position, Velocity) {
@@ -26,18 +25,20 @@ class Player {
     }
 
     // Method to initialize the player on the screen
-    inshelizePlayer() {
+    initializePlayer() {
         // Generate unique IDs
-        const playerId = `player${Player.playerId}`;
+        const playerId = `player`;
         //const nextPositionId = `nextPosition`; // For debugging purposes
-        Player.playerId++;
 
         // Add nextPosition and player elements to the DOM
         //this.GameInstance.element.innerHTML += `<div id="${nextPositionId}"></div>`; // For debugging purposes
-        this.GameInstance.element.innerHTML += `<div id="${playerId}"></div>`;
+        //this.GameInstance.element.innerHTML += `<div id="${playerId}"></div>`;
+
+        this.player = document.createElement("div");
+        this.player.id = this.playerId;
 
         //this.HTMLnextPosition = document.getElementById(nextPositionId); // For debugging purposes
-        this.player = document.getElementById(playerId);
+        //this.player = document.getElementById(playerId);
 
         // Style nextPosition For debugging purposes
         // this.HTMLnextPosition.textContent = "(0,0)";
@@ -63,6 +64,8 @@ class Player {
         //this.player.style.backgroundRepeat = "no-repeat"; // Repeat the background image
         //this.player.style.backgroundSize = "auto"; // Ensure the image is not stretched
         //this.player.style.backgroundPosition = "32px 0px"; // Initial position of the sprite sheet
+
+        this.GameInstance.element.appendChild(this.player);
     }
 
     // The main game loop for the player that handles movement and gravity
