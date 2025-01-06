@@ -24,6 +24,7 @@ class Building {
         this.building.style.left = this.Position.x + "px";
         this.building.style.top = this.Position.y + "px";
         this.building.style.backgroundColor = "green";
+        this.building.style.border = "2px solid #333";
         this.building.style.position = "absolute";
         this.building.style.backgroundImage = `url(${this.background})`;
         this.building.style.backgroundRepeat = "repeat"; // Repeat the background image

@@ -5,79 +5,112 @@ let fruits = {
     "strawberry": "assets/Fruits/Strawberry.png",
 }
 
-
 class Fruit {
-    static fruitid = 0;
+    static fruitId = 0;
 
+    /**
+     * Creates a new Fruit instance.
+     * @param {Object} GameInstance - The game instance controlling the fruit.
+     * @param {Object} Position - The position and dimensions of the fruit.
+     * @param {string} type - The type of fruit (e.g., "apple", "cherry").
+     */
     constructor(GameInstance, Position, type) {
         this.GameInstance = GameInstance;
         this.Position = Position;
-
         this.type = type;
-        this.background = fruits[type]; // Background image of the building
-        this.frameWidth = 32; // Width of each frame in the sprite sheet
-        this.frameHeight = 32; // Height of each frame in the sprite sheet
-        this.currentFrame = 0; // Current frame of the sprite sheet
-        this.animationSpeed = 20; // Number of frames to wait before updating the sprite
-        this.frameCount = 17; // Total number of frames in the sprite sheet
-        this.frameTimer = 0; // Frame timer to control the animation speed
-        this.frameShift = 8; // Shift the frame to the right
+        this.uniqueId = `fruit-${Fruit.fruitId++}`;
+        this.animation = null;
+        this.element = null;
     }
 
+    /**
+     * Initializes the fruit element and its animation.
+     */
     initializeFruit() {
-        // Generate a unique ID based on the current timestamp
-        this.uniqueId = `fruit-${Fruit.fruitid}`;
-        Fruit.fruitid++;
+        // Create the fruit DOM element
+        this.element = document.createElement("div");
+        this.element.id = this.uniqueId;
 
-        // Create a new div for the fruit
-        this.fruit = document.createElement("div");
-        this.fruit.id = this.uniqueId;
-        // Add the building to the DOM with the unique ID
-        //this.GameInstance.element.innerHTML += `<div id="${this.uniqueId}"></div>`;
-        //this.fruit = document.getElementById(this.uniqueId);
+        this.element.style.width = `${this.Position.width}px`;
+        this.element.style.height = `${this.Position.height}px`;
+        this.element.style.left = `${this.Position.x}px`;
+        this.element.style.top = `${this.Position.y}px`;
+        //this.element.style.backgroundColor = "yellow";
+        this.element.style.position = "absolute";
 
-        this.fruit.style.width = this.Position.width + "px";
-        this.fruit.style.height = this.Position.height + "px";
-        this.fruit.style.left = this.Position.x + "px";
-        this.fruit.style.top = this.Position.y + "px";
-        //this.fruit.style.backgroundColor = "red";
-        this.fruit.style.position = "absolute";
-        this.fruit.style.backgroundImage = `url(${this.background})`;
-        // this.fruit.style.backgroundRepeat = "no-repeat";
-        // this.fruit.style.backgroundSize = "auto"; // Or adjust based on your sprite sheet
-        this.fruit.style.backgroundPosition = "-8px -6px"
+        // Attach animation
+        const frameWidth = 32;
+        const frameHeight = 32;
+        const frameCount = 17;
+        const animationSpeed = 20;
+        const shiftX = -7;
+        const shiftY = -4;
+
+        this.animation = new SpriteAnimation(
+            this.element,
+            new Animation({
+                frameWidth,
+                frameHeight,
+                frameCount,
+                animationSpeed,
+                backgroundImage: fruits[this.type],
+                shiftX,
+                shiftY
+            })
+        );
+
+        // Start animation
+        this.animation.start();
 
         // Append the fruit to the game area
-        this.GameInstance.element.appendChild(this.fruit);
+        this.GameInstance.element.appendChild(this.element);
     }
 
+    /**
+     * Handles the fruit's update loop.
+     * @param {Object} playerPosition - The position of the player to check for collisions.
+     * @returns {Object} The fruit's status (e.g., deleted or not).
+     */
     fruitLoop(playerPosition) {
-        let fruitStatus = {
-            deleted: false,
-            type: this.type
-        }
+        const fruitStatus = { deleted: false, type: this.type };
 
-        if(this.Position.checkCollision(playerPosition)){
-            this.GameInstance.element.removeChild(this.fruit);
-
+        // Check for collision with the player
+        if (this.Position.checkCollision(playerPosition)) {
+            // Stop the animation and remove the element
+            this.animation.stop();
             fruitStatus.deleted = true;
-            return fruitStatus;
+
+            // Attach animation
+            const frameWidth = 32;
+            const frameHeight = 32;
+            const frameCount = 6;
+            const animationSpeed = 15;
+            const shiftX = -5;
+            const shiftY = -4;
+
+            this.animation = new SpriteAnimation(
+                this.element,
+                new Animation({
+                    frameWidth,
+                    frameHeight,
+                    frameCount,
+                    animationSpeed,
+                    backgroundImage: "assets/Fruits/Collected.png",
+                    shiftX,
+                    shiftY
+                })
+            );
+            this.animation.start();
+
+            setTimeout(() => {
+                this.animation.stop();
+                
+                this.GameInstance.element.removeChild(this.element);
+                
+            }, 400); // Delay removal to allow the donut animation to finish
+
         }
- 
-        this.updateAnimation();
+
         return fruitStatus;
-    }
-
-
-    updateAnimation() {
-        // Update the frame timer
-        this.frameTimer++;
-        if(this.frameTimer >= this.GameInstance.frameRate / this.animationSpeed){
-            this.frameTimer = 0;
-            this.currentFrame = (this.currentFrame + 1) % this.frameCount;
-        }
-
-        // Update the player's sprite position in the sprite sheet
-        this.fruit.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + this.frameShift}px -6px`;
     }
 }
