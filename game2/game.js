@@ -73,11 +73,11 @@ class Game {
         this.platformConstruction(0, 400, 46, 14, "Orange surface");
         this.platformConstruction(100, 450, 46, 14, "Orange surface");
         this.platformConstruction(200, 450, 46, 14, "Orange surface");
-        this.platformConstruction(300, 400, 46, 14, "Orange surface");
+        this.platformConstruction(301, 400, 46, 14, "Orange surface");
         //Middle bridge
         this.platformConstruction(450, 484, 46, 14, "Orange surface");
         this.platformConstruction(502, 400, 46, 14, "Orange surface");
-        this.platformConstruction(450, 280, 46, 14, "Orange surface");
+        this.platformConstruction(450, 300, 46, 14, "Orange surface");
         this.platformConstruction(600, 484, 46, 14, "Orange surface");
         // End Bridge
         this.platformConstruction(650, 400, 46, 14, "Orange surface");
@@ -103,8 +103,20 @@ class Game {
         this.platformConstruction(700, 300, 250, 46, "Pink grass");
 
         // Fruits
-        this.fruitConstruction(17, 370, "apple");
-        this.fruitConstruction(170, 370, "apple");
+        this.fruitConstruction(15, 370, "apple");
+        this.fruitConstruction(115, 420, "apple");
+        this.fruitConstruction(215, 420, "apple");
+        this.fruitConstruction(315, 370, "apple");
+
+        this.fruitConstruction(665, 370, "apple");
+        this.fruitConstruction(775, 420, "apple");
+        this.fruitConstruction(865, 420, "apple");
+        this.fruitConstruction(965, 370, "apple");
+
+        this.fruitConstruction(665, 370, "apple");
+        this.fruitConstruction(775, 420, "apple");
+        this.fruitConstruction(865, 420, "apple");
+        this.fruitConstruction(965, 370, "apple");
 
         // Player
         this.player = new Player(this, new Rectangle(150, 200, 23, 28), new velocity(0, 0));
