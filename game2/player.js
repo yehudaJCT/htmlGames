@@ -196,7 +196,7 @@ class Player {
     }
 
     gameOver() {
-        this.Position.x = 150;
+        this.Position.x = 180;
         this.Position.y = 200;
         this.Velocity.x = 0;
         this.Velocity.y = 0;

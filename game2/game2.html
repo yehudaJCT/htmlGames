@@ -7,12 +7,35 @@
     <link rel="stylesheet" href="game2.css">
 </head>
 <body>
-    <div id="game-area"></div>
+    <div id="navigation-bar">
+        <div class="nav-link" data-target="play-content">
+            <img src="assets/Buttons/Play.png" alt="Play" class="nav-icon">
+        </div>
+        <div class="nav-link" data-target="leaderboard-content">
+            <img src="assets/Buttons/Leaderboard.png" alt="Leaderboard" class="nav-icon">
+        </div>
+        <div class="nav-link" data-target="achievements-content">
+            <img src="assets/Buttons/Achievements.png" alt="Achievements" class="nav-icon">
+        </div>
+        <div class="nav-link" data-target="settings-content">
+            <img src="assets/Buttons/Settings.png" alt="Settings" class="nav-icon">
+        </div>
+        <div id="Score">
+            Score: 0 Time: 0
+        </div>
+    </div>
+    
+    <div id="game-area">
+        <div id="info-box"></div>
+    </div>
+
     <script src="util.js"></script>
     <script src="objects.js"></script>
     <script src="eventListener.js"></script>
     <script src="animation.js"></script>
     <script src="fruit.js"></script>
+    <script src="start.js"></script>
+    <script src="end.js"></script>
     <script src="player.js"></script>
     <script src="building.js"></script>
     <script src="game.js"></script>

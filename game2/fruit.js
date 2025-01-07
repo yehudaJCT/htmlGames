@@ -1,8 +1,13 @@
 let fruits = {
     "apple": "assets/Fruits/Apple.png",
+    "bananas": "assets/Fruits/Bananas.png",
     "cherrie": "assets/Fruits/Cherries.png",
+    "kiwi": "assets/Fruits/Kiwi.png",
     "origin": "assets/Fruits/Orange.png",
     "strawberry": "assets/Fruits/Strawberry.png",
+    "melon": "assets/Fruits/Melon.png",
+    "pineapple": "assets/Fruits/Pineapple.png",
+
 }
 
 class Fruit {
@@ -43,7 +48,7 @@ class Fruit {
         const frameHeight = 32;
         const frameCount = 17;
         const animationSpeed = 20;
-        const shiftX = -7;
+        const shiftX = -4;
         const shiftY = -4;
 
         this.animation = new SpriteAnimation(
@@ -83,9 +88,9 @@ class Fruit {
             // Attach animation
             const frameWidth = 32;
             const frameHeight = 32;
-            const frameCount = 6;
+            const frameCount = 10;
             const animationSpeed = 15;
-            const shiftX = -5;
+            const shiftX = -4;
             const shiftY = -4;
 
             this.animation = new SpriteAnimation(
