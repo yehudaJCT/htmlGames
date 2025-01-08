@@ -1,5 +1,3 @@
-
-
 // Rectangle class for handling positions and dimensions
 class Rectangle {
     constructor(x, y, width, height) {
