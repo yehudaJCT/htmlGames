@@ -2,7 +2,9 @@ class Game {
     constructor(seed = Math.floor(Math.random() * 1000000)) {
         this.element = document.getElementById("game-area");
         this.navBarElement = document.getElementById("navigation-bar");
-        this.scorecore = document.getElementById("Score");
+        this.fruitListElement = document.getElementById("fruit-list");
+        this.scoreElement = document.getElementById("Score");
+        this.seedElement = document.getElementById("seed");
         this.gameWidth = 1000;
         this.gameHeight = 500;
         this.frameRate = 60;
@@ -29,7 +31,8 @@ class Game {
         this.subFC = new Array();
 
         this.seed = seed; // Seed for randomization
-        this.random = this.seededRandom(this.seed );
+        
+        this.random = this.seededRandom(this.seed);
 
         this.fruitTypes = {
             "apple": "assets/Fruits/Apple.png",
@@ -91,13 +94,30 @@ class Game {
         this.fruits.push(f);
     }
 
-    scoref(newfruit) {
-        console.log(`A ${this.subFC}`);
+    updateFruitList() {
+        // Clear the existing list of fruits
+        this.fruitListElement.innerHTML = "";
     
+        // Add fruits from this.subFC to the list
+        this.subFC.forEach(fruit => {
+            const img = document.createElement("div");
+            img.style.backgroundImage = `url(${this.fruitTypes[fruit]})`;
+            img.style.width = "32px";
+            img.style.height = "32px";
+            //img.style.margin = "1px";
+            //img.style.backgroundSize = "cover"; // Ensure the image covers the div
+            //img.style.backgroundPosition = "center"; // Center the image in the div
+    
+            this.fruitListElement.appendChild(img);
+        });
+    }
+
+    scoref(newfruit) {
+
         // If the list is empty, add the new fruit and return 1
         if (this.subFC.length === 0) {
             this.subFC.push(newfruit);
-            console.log(`B ${this.subFC}`);
+            this.updateFruitList(); // Update navigation bar
             return 1;
         }
     
@@ -115,25 +135,26 @@ class Game {
         if (allEqual) {
             // All elements are equal to newfruit
             this.subFC.push(newfruit);
-            console.log(`X ${this.subFC}`);
-            return 2 * size + 1;
+            this.updateFruitList(); // Update navigation bar
+            //return 2 * size + 1;
+            return (size + 1) * (size + 1);
         }
     
         if (isUnique && !hasDuplicates) {
             // newfruit is unique and no duplicates exist
             this.subFC.push(newfruit);
-            console.log(`Y ${this.subFC}`);
+            this.updateFruitList(); // Update navigation bar
             return new Set(this.subFC).size; // Count unique elements
         }
     
         // If neither condition is met, reset subFC and add newfruit
         this.subFC = [newfruit];
-        console.log(`D ${this.subFC}`);
+        this.updateFruitList(); // Update navigation bar
         return 1;
     }
 
-
     inshelizeGame() {
+        this.seedElement.textContent = `Seed: ${this.seed}`
         // Use platformConstruction for all buildings
         //start
         this.platformConstruction(50, 300, 250, 45, "Green grass");
@@ -154,7 +175,8 @@ class Game {
         this.platformConstruction(950, 400, 46, 14, "Orange surface");
         //columns
         this.platformConstruction(350, 200, 100, 500, "Brick wall");
-        this.platformConstruction(550, 80, 100, 334, "Brick wall");
+        this.platformConstruction(550, 80, 100, 100, "Brick wall");
+        this.platformConstruction(550, 220, 100, 194, "Brick wall");
         //up
         this.platformConstruction(300, 50, 350, 45, "Brown grass");
         //Boydham left
@@ -188,60 +210,6 @@ class Game {
         // Randomize fruits
         this.randomizeFruits(fruitPositions);
 
-        // // Fruits
-        // //start
-        // this.fruitConstruction(80, 270, "apple");
-        // this.fruitConstruction(260, 270, "apple");
-        // //Start Bridge
-        // this.fruitConstruction(15, 370, "apple");
-        // this.fruitConstruction(115, 420, "apple");
-        // this.fruitConstruction(215, 420, "apple");
-        // this.fruitConstruction(315, 370, "apple");
-        // //Middle bridge
-        // this.fruitConstruction(465, 270, "apple");
-        // this.fruitConstruction(517, 370, "apple");
-        // this.fruitConstruction(465, 454, "apple");
-        // this.fruitConstruction(615, 454, "apple");
-        // // End Bridge
-        // this.fruitConstruction(665, 370, "apple");
-        // this.fruitConstruction(765, 420, "apple");
-        // this.fruitConstruction(865, 420, "apple");
-        // this.fruitConstruction(965, 370, "apple");
-        // //columns
-        // this.fruitConstruction(370, 170, "apple");
-        // this.fruitConstruction(420, 170, "apple");
-        // //up
-        // this.fruitConstruction(320, 20, "apple");
-        // this.fruitConstruction(370, 20, "apple");
-        // this.fruitConstruction(420, 20, "apple");
-        // this.fruitConstruction(470, 20, "apple");
-        // this.fruitConstruction(520, 20, "apple");
-        // this.fruitConstruction(570, 20, "apple");
-        // this.fruitConstruction(620, 20, "apple");
-        // //Boydham right
-        // this.fruitConstruction(970, 10, "apple");
-        // this.fruitConstruction(920, 10, "apple");
-        // this.fruitConstruction(970, 100, "apple");
-        // //Boydham left
-        // this.fruitConstruction(15, 70, "apple");
-        // this.fruitConstruction(65, 70, "apple");
-        // this.fruitConstruction(120, 120, "apple");
-        // this.fruitConstruction(170, 120, "apple");
-        // this.fruitConstruction(220, 120, "apple");
-        // this.fruitConstruction(15, 165, "apple");
-        // //staircase
-        // this.fruitConstruction(670, 20, "apple");
-        // this.fruitConstruction(720, 20, "apple");
-        // this.fruitConstruction(670, 95, "apple");
-        // this.fruitConstruction(720, 95, "apple");
-        // this.fruitConstruction(770, 95, "apple");
-        // this.fruitConstruction(720, 170, "apple");
-        // this.fruitConstruction(770, 170, "apple");
-        // this.fruitConstruction(820, 170, "apple");
-        // // End
-        // this.fruitConstruction(730, 270, "apple");
-        // this.fruitConstruction(910, 270, "apple");
-
         this.start = new Stert(this, new Rectangle(150, 263, 60, 37))
         this.start.initializeStert();
 
@@ -261,8 +229,6 @@ class Game {
                 continue;
             }
 
-
-
             for (let i = this.fruits.length - 1; i >= 0; i--) { 
                 const fruit = this.fruits[i];
                 const fruitStatus = fruit.fruitLoop(this.player.Position);
@@ -277,26 +243,73 @@ class Game {
 
             let isPlayerAtEnd = this.end.EndLoop(this.player.Position);
 
-            // if(isPlayerAtEnd)
-            // {
-            //     break;
-            // }
+
 
             this.player.playerLoop(this.buildings.map(building => building.Position));
             //console.log(this.fruitCollection);
 
-            this.scorecore.textContent = `Score: ${this.score} Time: ${(this.time / 60).toFixed(2)}`;
+            this.scoreElement.textContent = `Score: ${this.score} Time: ${(this.time / 60).toFixed(2)}`;
             this.element.style.backgroundPosition = `0px -${this.time / 2}px`
+
+
+            if(isPlayerAtEnd)
+            {
+                this.endGame()
+                break;
+            }
+
             this.time++;
         } 
     }
-}
 
-// while(true){
-//     let game = new Game();
-//     game.inshelizeGame();
-//     game.gameLoop();
-// }
+    endGame() {
+        // Create the game-over message container
+        const gameOverMessage = document.createElement("div");
+        gameOverMessage.id = "game-over-message";
+    
+        // Set the content
+        gameOverMessage.innerHTML = `
+            <p>Game Over!</p>
+            <p>Final Score: ${this.score}</p>
+            <p>Final Time: ${(this.time / 60).toFixed(2)}</p>
+            <button id="restart-game">Restart Game</button>
+        `;
+    
+        // Append the message to the game area
+        this.element.appendChild(gameOverMessage);
+    
+        // Stop the game loop
+        //window.PASS = true;
+    
+        // Restart game event listener
+        const restartButton = document.getElementById("restart-game");
+        restartButton.addEventListener("click", () => {
+            gameOverMessage.remove(); // Remove the game-over message
+            window.PASS = false; // Reset the game loop flag
+            game.resetGame(); // Reset the game state
+            game.gameLoop(); // Restart the game
+        });
+    }
+    
+    resetGame() {
+        // Clear the entire "game-area" element
+        this.element.innerHTML = "";
+    
+        // Reset game state variables
+        this.time = 0;
+        this.score = 0;
+        this.fruits = [];
+        this.fruitCollection = [];
+        this.subFC = [];
+
+        this.seed = Math.floor(Math.random() * 1000000)
+    
+        // Reinitialize game elements
+        this.updateFruitList();
+        this.inshelizeGame();
+    }
+    
+}
 
 let game = new Game();
 game.inshelizeGame();
