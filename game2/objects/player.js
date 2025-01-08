@@ -9,13 +9,15 @@ class Player {
         this.isPlayerAlive = true;
 
         // Animation properties
-        //this.spriteSheet = new Image();
-        this.spriteSheet = "assets/VirtualGuy/Idle.png"; // Set your sprite sheet path here
+        this.spriteSheet = "assets/VirtualGuy/Fall.png"; // Set your sprite sheet path here
         this.frameWidth = 32;  // Width of one frame in your sprite sheet
         this.frameHeight = 32; // Height of one frame in your sprite sheet
         this.currentFrame = 0; // Track current frame of animation
         this.animationSpeed = 10; // Number of frames per second
-        this.frameTimer = 0; // Timer to manage frame switching
+        this.frameCount = 11; // Total number of frames in the sprite sheet
+        this.frameTimer = 0; // Frame timer to control the animation speed
+        this.ShiftX = -5; // Shift the frame to the right
+        this.ShiftY = -4;
 
         this.move = { moveSped: 5, acceleration: 1 };
         this.jump = { jumpPower: 10, canjump: false };
@@ -23,42 +25,26 @@ class Player {
     }
 
     // Method to initialize the player on the screen
-    inshelizePlayer() {
+    initializePlayer() {
         // Generate unique IDs
-        const playerId = `player`;
-        //const nextPositionId = `nextPosition`; // For debugging purposes
+        this.playerId = `player`;
 
-        // Add nextPosition and player elements to the DOM
-        //this.GameInstance.element.innerHTML += `<div id="${nextPositionId}"></div>`; // For debugging purposes
-        this.GameInstance.element.innerHTML += `<div id="${playerId}"></div>`;
+        this.element = document.createElement("div");
+        this.element.id = this.playerId;
 
         //this.HTMLnextPosition = document.getElementById(nextPositionId); // For debugging purposes
-        this.player = document.getElementById(playerId);
-
-        // Style nextPosition For debugging purposes
-        // this.HTMLnextPosition.textContent = "(0,0)";
-        // this.HTMLnextPosition.style.width = this.Position.width + "px";
-        // this.HTMLnextPosition.style.height = this.Position.height + "px";
-        // this.HTMLnextPosition.style.left = this.Position.x + "px";
-        // this.HTMLnextPosition.style.top = this.Position.y + "px";
-        // this.HTMLnextPosition.style.backgroundColor = "yellow";
-        // this.HTMLnextPosition.style.position = "absolute";
-        // this.HTMLnextPosition.style.opacity = 0.5;
-        // this.HTMLnextPosition.style.zIndex = 2; // Ensure it's below the player
-        // this.HTMLnextPosition.style.pointerEvents = "none"; // Avoid blocking interactions
+        //this.player = document.getElementById(playerId);
 
         // Style player
-        this.player.style.width = this.Position.width + "px";
-        this.player.style.height = this.Position.height + "px";
-        this.player.style.left = this.Position.x + "px";
-        this.player.style.top = this.Position.y + "px";
-        this.player.style.backgroundColor = "yellow";
-        this.player.style.position = "absolute";
-        //this.player.style.zIndex = 1; // Ensure it's above nextPosition
-        this.player.style.backgroundImage = `url(${this.spriteSheet})`; // Set the sprite sheet
-        //this.player.style.backgroundRepeat = "no-repeat"; // Repeat the background image
-        //this.player.style.backgroundSize = "auto"; // Ensure the image is not stretched
-        //this.player.style.backgroundPosition = "32px 0px"; // Initial position of the sprite sheet
+        this.element.style.width = this.Position.width + "px";
+        this.element.style.height = this.Position.height + "px";
+        this.element.style.left = this.Position.x + "px";
+        this.element.style.top = this.Position.y + "px";
+        //this.element.style.backgroundColor = "yellow";
+        this.element.style.position = "absolute";
+        this.element.style.backgroundImage = `url(${this.spriteSheet})`; // Set the sprite sheet
+
+        this.GameInstance.element.appendChild(this.element);
     }
 
     // The main game loop for the player that handles movement and gravity
@@ -83,19 +69,60 @@ class Player {
         }
 
         this.updateAnimation(); // Update the player's animation
+        this.refreshPlayerAnimation();
     }
 
-    updateAnimation() {
+    refreshPlayerAnimation() {
         // Update the frame timer
         this.frameTimer++;
         if(this.frameTimer >= this.GameInstance.frameRate / this.animationSpeed){
             this.frameTimer = 0;
-            this.currentFrame = (this.currentFrame + 1) % 11;
+            this.currentFrame = (this.currentFrame + 1) % this.frameCount;
         }
 
         // Update the player's sprite position in the sprite sheet
-        this.player.style.backgroundPosition = `-${this.currentFrame * this.frameWidth + 4}px 0px`;
+        this.element.style.backgroundPosition = `-${this.currentFrame * this.frameWidth - this.ShiftX}px ${this.ShiftY}px`;
     }
+
+
+    updateAnimation() {
+        let animationToPlay = null;
+        
+        if (this.Velocity.y > 0) {
+            // Falling animation
+            animationToPlay = "assets/VirtualGuy/Fall.png";
+            this.animationSpeed = 1;
+            this.frameCount = 1;
+        } else if (this.Velocity.y < 0) {
+            // Jumping animation
+            animationToPlay = "assets/VirtualGuy/Jump.png";
+            this.animationSpeed = 1;
+            this.frameCount = 1;
+        } else if (this.Velocity.x > 0) {
+            // Moving right animation
+            animationToPlay = "assets/VirtualGuy/Run.png";
+            this.animationSpeed = 30;
+            this.element.style.transform = "";
+            this.frameCount = 12;
+        } else if (this.Velocity.x < 0) {
+            // Moving left animation (use the same run animation but flipped if needed)
+            animationToPlay = "assets/VirtualGuy/Run.png";
+            this.element.style.transform = "scaleX(-1)"; // Flip the element horizontally
+            this.animationSpeed = 30;
+            this.frameCount = 12;
+        } else {
+            // Idle animation
+            animationToPlay = "assets/VirtualGuy/Idle.png";
+            this.animationSpeed = 15;
+            this.frameCount = 11;
+        }
+    
+        if (this.spriteSheet !== animationToPlay) {
+            this.spriteSheet = animationToPlay;
+            this.element.style.backgroundImage = `url(${animationToPlay})`;
+        }
+    }
+    
 
     // Function to move the player and check for collisions with other rectangles
     movePlayer(rectangles) {
@@ -103,15 +130,15 @@ class Player {
         let nextPosition = new Rectangle(
             Math.min(this.GameInstance.gameWidth - this.Position.width, Math.max(0, this.Position.x + this.Velocity.x)),
             //Math.min(this.GameInstance.gameHeight - this.Position.height, Math.max(0, this.Position.y + this.Velocity.y)),
-            Math.max(0, this.Position.y + this.Velocity.y),
+            this.Position.y + this.Velocity.y,
             this.Position.width,
             this.Position.height
         );
 
-        // For debugging purposes
-        //this.HTMLnextPosition.textContent = `(${this.Velocity.x},${this.Velocity.y})`;
-        //this.HTMLnextPosition.style.left = `${nextPosition.x}px`;
-        //this.HTMLnextPosition.style.top = `${nextPosition.y}px`;
+        if(nextPosition.y < 0){
+            nextPosition.y = 0;
+            this.Velocity.y = 0;
+        }
 
         if (nextPosition.y >= this.GameInstance.gameHeight) {
             this.isPlayerAlive = false;
@@ -164,13 +191,13 @@ class Player {
         this.Position = nextPosition;
 
         // Update the player's position in the DOM
-        this.player.style.left = `${this.Position.x}px`;
-        this.player.style.top = `${this.Position.y}px`;
+        this.element.style.left = `${this.Position.x}px`;
+        this.element.style.top = `${this.Position.y}px`;
     }
 
     gameOver() {
-        this.Position.x = 100;
-        this.Position.y = 0;
+        this.Position.x = 180;
+        this.Position.y = 200;
         this.Velocity.x = 0;
         this.Velocity.y = 0;
         this.isPlayerAlive = true;

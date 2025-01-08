@@ -7,13 +7,47 @@
     <link rel="stylesheet" href="game2.css">
 </head>
 <body>
-    <div id="game-area"></div>
-    <script src="util.js"></script>
-    <script src="objects.js"></script>
+    <nav id="navigation-bar">
+        <div class="nav-link" data-target="play-content" aria-label="Play">
+            <img src="assets/Buttons/Play.png" alt="Play" class="nav-icon">
+        </div>
+        <div class="nav-link" data-target="leaderboard-content" aria-label="Leaderboard">
+            <img src="assets/Buttons/Leaderboard.png" alt="Leaderboard" class="nav-icon">
+        </div>
+        <div class="nav-link" data-target="achievements-content" aria-label="Achievements">
+            <img src="assets/Buttons/Achievements.png" alt="Achievements" class="nav-icon">
+        </div>
+        <div class="nav-link" data-target="settings-content" aria-label="Settings">
+            <img src="assets/Buttons/Settings.png" alt="Settings" class="nav-icon">
+        </div>
+        <div id="Score" aria-label="Score">
+            Score: 0 | Time: 0
+        </div>
+        <div id="fruit-list">
+            <!-- Dynamically added images will appear here -->
+        </div>
+    </nav>
+
+    <main id="game">
+        <div id="info-box">
+            <div id="leaderboard">Leaderboard</div>
+            <div id="achievements">Achievements</div>
+            <div id="settings">
+                Settings
+                <div id="seed">Seed: 0</div>
+            </div>
+        </div>
+        <div id="game-area"></div>
+    </main>
+
     <script src="eventListener.js"></script>
-    <script src="fruit.js"></script>
-    <script src="player.js"></script>
-    <script src="building.js"></script>
+    <script src="animation.js"></script>
+    <script src="objects/objects.js"></script>
+    <script src="objects/fruit.js"></script>
+    <script src="objects/start.js"></script>
+    <script src="objects/end.js"></script>
+    <script src="objects/player.js"></script>
+    <script src="objects/building.js"></script>
     <script src="game.js"></script>
 </body>
 </html>

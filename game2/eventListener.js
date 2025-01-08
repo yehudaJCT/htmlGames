@@ -19,6 +19,8 @@ let inputTracker = {
 
 let isEventTriggered = false;
 
+let PASS = false;
+
 // Handle keyboard input for smooth movement
 document.addEventListener("keydown", (event) => {
     switch (event.key) {
@@ -71,4 +73,57 @@ document.addEventListener("keyup", (event) => {
             break;
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const navLinks = document.querySelectorAll(".nav-link");
+    const infoBox = document.getElementById("info-box");
+
+    const leaderboard = document.getElementById("leaderboard");
+    const achievements = document.getElementById("achievements");
+    const settings = document.getElementById("settings");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", (event) => {
+            // Get the target content from the data attribute
+            const targetContent = event.currentTarget.getAttribute("data-target");
+            
+            // If the "Play" tab is clicked, close the infoBox
+            if (targetContent === "play-content") {
+                infoBox.style.display = "none"; // Close any open content
+                PASS = false;
+            } else if (targetContent === "leaderboard-content") {
+                // Set the content inside the square and show it
+                //infoBox.textContent = `You selected: ${targetContent}`;
+                infoBox.style.display = "block"; // Make the infoBox visible
+
+                leaderboard.style.display = "block"; 
+                achievements.style.display = "none"; 
+                settings.style.display = "none"; 
+                PASS = true;
+            }
+            else if (targetContent === "achievements-content") {
+                // Set the content inside the square and show it
+                //infoBox.textContent = `You selected: ${targetContent}`;
+                infoBox.style.display = "block"; // Make the infoBox visible
+
+                leaderboard.style.display = "none"; 
+                achievements.style.display = "block"; 
+                settings.style.display = "none";  
+                PASS = true;
+            }
+            else if (targetContent === "settings-content") {
+                // Set the content inside the square and show it
+                //infoBox.textContent = `You selected: ${targetContent}`;
+                infoBox.style.display = "block"; // Make the infoBox visible
+
+                leaderboard.style.display = "none"; 
+                achievements.style.display = "none"; 
+                settings.style.display = "block"; 
+                PASS = true;
+            }
+        });
+    });
+});
+
 
