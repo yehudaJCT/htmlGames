@@ -13,6 +13,7 @@ class Game {
         // this.animationSpeed = 20;
         this.time = 0;
         this.score = 0;
+        this.amountFruit = 0;
 
         this.navBarElement.style.width = this.gameWidth + "px";
         this.navBarElement.style.backgroundImage = `url("assets/Background/Brown.png")`;
@@ -59,6 +60,7 @@ class Game {
     randomizeFruits(positions) {
         positions.forEach(([x, y]) => {
             if (this.random() < 0.8) { // 80% chance to spawn fruit
+                this.amountFruit++;
                 const fruitKeys = Object.keys(this.fruitTypes);
                 const randomFruit = fruitKeys[Math.floor(this.random() * fruitKeys.length)];
                 this.fruitConstruction(x, y, randomFruit);
@@ -252,7 +254,7 @@ class Game {
             this.element.style.backgroundPosition = `0px -${this.time / 2}px`
 
 
-            if(isPlayerAtEnd)
+            if(isPlayerAtEnd && this.amountFruit == this.fruitCollection.length)
             {
                 this.endGame()
                 break;
