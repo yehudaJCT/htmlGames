@@ -42,10 +42,12 @@ class End {
     EndLoop(playerPosition) {
         // Check for collision with the player
         if (this.Position.checkCollision(playerPosition)) {
+            this.refreshPlayerAnimation()
             return true;
         }
 
         this.refreshPlayerAnimation()
+        return false;
     }
 
     refreshPlayerAnimation() {
