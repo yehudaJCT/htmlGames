@@ -208,10 +208,13 @@ function win(whoWins){
         switch (difficulty) {
             case 'easy':
                 score += 1
+                break
             case 'medium':
                 score += 2
+                break
             case 'hard':
                 score += 3
+                break
         }
         updateScore()
     }

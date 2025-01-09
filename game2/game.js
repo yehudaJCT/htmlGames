@@ -8,6 +8,7 @@ class Game {
         this.gameWidth = 1000;
         this.gameHeight = 500;
         this.frameRate = 60;
+        document.body.style.zoom = "120%";
 
         // this.frameTimer = 0;
         // this.animationSpeed = 20;

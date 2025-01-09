@@ -214,3 +214,17 @@ select:hover {
     display: flex;
 }
 
+.score {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

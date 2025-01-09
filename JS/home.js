@@ -273,14 +273,14 @@ function checkIsValidInput(user, pass) {
         }, 5000);
         return false;
     }
-    var re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,10}$/;
-    if (!re.test(pass)) {
-        document.getElementById("message").innerHTML = 'The password must contain 8-10 chracters in this format: <br/>lowercase letters, uppercase letters, numbers and a special character';
-        setTimeout(function () {
-            document.getElementById("message").innerHTML = "";
-        }, 5000);
-        return false;
-    }
+    // var re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,10}$/;
+    // if (!re.test(pass)) {
+    //     document.getElementById("message").innerHTML = 'The password must contain 8-10 chracters in this format: <br/>lowercase letters, uppercase letters, numbers and a special character';
+    //     setTimeout(function () {
+    //         document.getElementById("message").innerHTML = "";
+    //     }, 5000);
+    //     return false;
+    // }
     return true;
 }
 
