@@ -8,7 +8,11 @@ class Game {
         this.gameWidth = 1000;
         this.gameHeight = 500;
         this.frameRate = 60;
-        document.body.style.zoom = "120%";
+        //document.body.style.zoom = "169%";
+
+        this.currentUserIndex = localStorage.currentUser;
+        this.maxScore = JSON.parse(localStorage.getItem('maxScore'));
+        this.userData = JSON.parse(localStorage.getItem(`user#${this.currentUserIndex}`));
 
         // this.frameTimer = 0;
         // this.animationSpeed = 20;
@@ -46,6 +50,18 @@ class Game {
             "melon": "assets/Fruits/Melon.png",
             "pineapple": "assets/Fruits/Pineapple.png",
         };
+    }
+
+    updateUserScore(){
+        this.score
+        if (this.userData.achivment.maxCatchTheTarget < this.score){
+            this.userData.achivment.maxCatchTheTarget = this.score
+            localStorage.setItem(`user#${this.currentUserIndex}`, JSON.stringify(this.userData))
+            if (this.maxScore.catchTheTarget < this.score){
+                this.maxScore.catchTheTarget = this.score
+                localStorage.setItem('maxScore', JSON.stringify(this.maxScore))
+            }
+        }
     }
 
     // Seeded random number generator
@@ -255,7 +271,7 @@ class Game {
             this.element.style.backgroundPosition = `0px -${this.time / 2}px`
 
 
-            if(isPlayerAtEnd && this.amountFruit == this.fruitCollection.length)
+            if(isPlayerAtEnd )//&& this.amountFruit == this.fruitCollection.length
             {
                 this.endGame()
                 break;
@@ -270,6 +286,8 @@ class Game {
         const gameOverMessage = document.createElement("div");
         gameOverMessage.id = "game-over-message";
     
+        this.updateUserScore()
+
         // Set the content
         gameOverMessage.innerHTML = `
             <p>Game Over!</p>
