@@ -1,0 +1,115 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #eb74a2, #ACB6E5);
+    background-repeat: no-repeat;
+    text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+form {
+    position: absolute;
+    top: 30%;
+    margin: auto;
+}
+
+h2 {
+    font-family: cursive;
+    font-weight: bold;
+    margin-bottom: 350px;
+    font-size: 50px;
+}
+
+
+h1 {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+}
+
+#containerSignUp,
+#containerForgot {
+    display: none;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    border-radius: 8px;
+    background-color: white;
+    width: 80%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    top: 10px;
+    left: 28px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    margin: auto;
+}
+
+#containerLogIn {
+
+    border-radius: 8px;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    width: 80%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    top: 10px;
+    left: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    margin: auto;
+}
+
+
+
+input {
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: black;
+    width: 200px;
+    font-size: 15px;
+    height: 30px;
+    font-weight: bold;
+    text-align-last: center;
+    margin: 10px;
+    font-family: system-ui;
+}
+
+.inputButton {
+    cursor: pointer;
+}
+
+.divUsername,
+.divPassword {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: flex-end;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#message {
+    color: red;
+    position: fixed;
+    top: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+
+a {
+    padding: 10px;
+    font-weight: bold;
+    color: black;
+}

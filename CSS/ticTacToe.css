@@ -1,0 +1,216 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+  }
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+    
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.cell:hover {
+    transform: scale(1.05);
+    background-color: #f1f1f1;
+}
+
+.cell:active {
+    transform: scale(0.95);
+}
+
+.menu {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.difficulty-selector {
+    margin-bottom: 5vh;
+}
+
+label {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: #fff;
+}
+
+select {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #74ebd5;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+select:hover {
+    background-color: #5fc3e4;
+}
+
+.player-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.x-play-button,
+.o-play-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background-color 0.3s;
+    margin-bottom: 3vh;
+}
+
+.x-play-button:hover,
+.o-play-button:hover {
+    transform: scale(1.05);
+    background-color: #e74c3c;
+}
+
+.x-play-button:active,
+.o-play-button:active {
+    transform: scale(0.95);
+}
+
+
+.cell.x::before,
+.cell.x::after{
+    content: '';
+    width: 12px;
+    height: 100px;
+    background-color: black;
+    position: absolute;
+}
+
+.cell.x::after{
+    transform: rotate(45deg) ;
+}
+
+.cell.x::before{
+    transform: rotate(-45deg) ;
+}
+
+.cell.o::before,
+.cell.o::after{
+    content: '';
+    border-radius: 100%;
+    position: absolute;
+}
+
+.cell.cell.o::before{
+    width: 90px;
+    height: 90px;
+    background-color: black;
+}
+
+.cell.o::after{
+    width: 65px;
+    height: 65px;
+    background-color: white;
+}
+
+.cell.x,
+.cell.o{
+    cursor: not-allowed;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-size: 3rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.winning-message .end-game-message {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.winning-message button {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.winning-message button:hover {
+    transform: scale(1.1);
+    background-color: #4b79a1;
+}
+
+.winning-message button:active {
+    transform: scale(0.95);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+.show {
+    display: flex;
+}
+
