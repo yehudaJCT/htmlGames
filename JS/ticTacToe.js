@@ -1,4 +1,4 @@
-var player, pc, menu, board, difficulty, CurrentTurn, xTurn, cells, winningMessage, restartButton, winningMessageText, scoreLabel, userData, score, currentUserIndex
+var player, pc, menu, board, difficulty, CurrentTurn, xTurn, cells, winningMessage, restartButton, winningMessageText, scoreLabel, userData, score, currentUserIndex, maxScore
 
 
 const WINNING_COMBINATIONS = [
@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     userData = JSON.parse(localStorage.getItem(`user#${currentUserIndex}`));
     score = 0
     
+    maxScore = JSON.parse(localStorage.getItem('maxScore')); 
+
     board = document.querySelector('.board')
 
     menu = document.querySelector('.menu')
@@ -230,5 +232,9 @@ function updateScore(){
     if (userData.achivment.maxTicTacToe < score){
         userData.achivment.maxTicTacToe = score
         localStorage.setItem(`user#${currentUserIndex}`, JSON.stringify(userData))
+        if (maxScore.TicTacToe < score){
+            maxScore.TicTacToe = score
+            localStorage.setItem('maxScore', JSON.stringify(maxScore))
+        }
     }
 }
