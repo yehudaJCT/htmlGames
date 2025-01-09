@@ -232,8 +232,8 @@ function updateScore(){
     if (userData.achivment.maxTicTacToe < score){
         userData.achivment.maxTicTacToe = score
         localStorage.setItem(`user#${currentUserIndex}`, JSON.stringify(userData))
-        if (maxScore.TicTacToe < score){
-            maxScore.TicTacToe = score
+        if (maxScore.ticTacToe < score){
+            maxScore.ticTacToe = score
             localStorage.setItem('maxScore', JSON.stringify(maxScore))
         }
     }

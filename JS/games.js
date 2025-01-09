@@ -24,12 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentUserIndex = localStorage.currentUser;
     const userData = JSON.parse(localStorage.getItem(`user#${currentUserIndex}`));
     const maxScores = JSON.parse(localStorage.getItem('maxScore')); 
+    console.log(document.getElementById('maxTicTacToe').textContent)
 
     document.getElementById('userCatchTheTarget').textContent = userData.achivment.maxCatchTheTarget || '0'; 
-    document.getElementById('userTicTacToe').textContent = userData.achivment. maxTicTacToe || '0'; 
+    document.getElementById('userTicTacToe').textContent = userData.achivment.maxTicTacToe || '0'; 
 
-    document.getElementById('maxWordScrambleScore').textContent = maxScores.catchTheTarget || '0';
+    document.getElementById('maxCatchTheTarget').textContent = maxScores.catchTheTarget || '0';
     document.getElementById('maxTicTacToe').textContent = maxScores.ticTacToe || '0';
+    console.log(maxScores.ticTacToe)
 })
 function eraseCookie(name) {
     document.cookie = "name" + "=" + name + ";" + "expires=Thu, 01 Jan 1970 00:00:00 GMT;" + ";path=/";
