@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/games.css" />
+    <script src="../JS/games.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <div id="header">
+            <a href="../HTML/home.html" onclick="eraseCookie();">Switch account</a>
+        </div>
+    </header>
+    <main>
+        <div id="welcome">
+            <h1>Welcome to Games World!</h1>
+            <div class="userData">
+                <div class="area">
+                    <h2 id="message"></h2>
+                    <p id="date"></p>
+                </div>
+                <div class="scores">
+                    <div class="your-scores">
+                        <h2>Your Scores:</h2>
+                        <p>Word Scramble: <span id="userCatchTheTarget">0</span></p>
+                        <p>Tic Tac Toe: <span id="userTicTacToe">0</span></p>
+                    </div>
+                    <div class="max-scores">
+                        <h2>Max Scores:</h2>
+                        <p>Word Scramble: <span id="maxCatchTheTarget">0</span></p>
+                        <p>Tic Tac Toe: <span id="maxTicTacToe">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-container">
+            <div class="flex-container">
+                <div class="flex-item"><a href="../HTML/ticTacToe.html"><img src="../Media/tictactoe.png" alt="Tic Tac Toe"></a></div>
+                <div class="flex-item"><a href="catchTheTarget.html"><img src="../Media/dominoes.jpeg" alt="dominoes"></a></div>
+                <div class="flex-item"><a href="construction.html"><img src="../Media/example1.jpeg" alt="backgammon"></a></div>
+            </div>
+            <div class="flex-container">
+                <div class="flex-item"><a href="fruit_game.html"><img src="../Media/example2.jpeg" alt="fruit game"></a></div>
+                <div class="flex-item"><a href="word_scramble.html"><img src="../Media/example3.jpeg" alt="word scramnle"></a></div>
+                <div class="flex-item"><a href="construction.html"><img src="../Media/example4.png" alt="connect four"></a></div>
+            </div>
+        </div>        
+    </main>
+
+
+</body>
+
+</html>

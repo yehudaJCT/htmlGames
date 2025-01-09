@@ -1,4 +1,4 @@
-var palyer, pc, menu, board, difficulty, CurrentTurn, xTurn, cells, winningMessage, restartButton, winningMessageText
+var player, pc, menu, board, difficulty, CurrentTurn, xTurn, cells, winningMessage, restartButton, winningMessageText, scoreLabel, userData, score, currentUserIndex
 
 
 const WINNING_COMBINATIONS = [
@@ -13,6 +13,11 @@ const WINNING_COMBINATIONS = [
   ];
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    currentUserIndex = localStorage.currentUser;
+    user  = localStorage.currentUser;
+    userData = JSON.parse(localStorage.getItem(`user#${currentUserIndex}`));
+    score = 0
     
     board = document.querySelector('.board')
 
@@ -25,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     restartButton = document.querySelector('.restart-button')
 
     winningMessageText = document.querySelector('.end-game-message')
+
+    scoreLabel = document.querySelector('.score').innerText = `Current score: 0`
 
     var shape_picking = document.querySelectorAll('.shape-selector')
     
@@ -41,10 +48,10 @@ function startPlay(event){
     var clickedElement = event.target;
     xTurn = true
     if (clickedElement.classList.contains('x-play-button')){
-        palyer = 'x'
+        player = 'x'
         pc = 'o'
     }else if (clickedElement.classList.contains('o-play-button')){
-        palyer = 'o'
+        player = 'o'
         pc = 'x'
         makePCMove()
 
@@ -87,10 +94,10 @@ function findBestMove(cells, player, depth) {
 
     for (let i = 0; i < cells.length; i++) {
         if (!cells[i].classList.contains('x') && !cells[i].classList.contains('o')) {
-            // Simulate the move
+
             cells[i].classList.add(player);
             const score = minimax(cells, 0, false, depth, -Infinity, Infinity);
-            // Undo the move
+
             cells[i].classList.remove(player);
 
             if (player === pc) {
@@ -110,10 +117,10 @@ function findBestMove(cells, player, depth) {
 }
 
 function minimax(cells, currentDepth, isMaximizing, depth, alpha, beta) {
-    if (checkWin(pc)) return 10 - currentDepth; // Favor faster wins
-    if (checkWin(palyer)) return currentDepth - 10; // Favor slower losses
+    if (checkWin(pc)) return 10 - currentDepth;
+    if (checkWin(player)) return currentDepth - 10;
     if (isDraw()) return 0;
-    if (currentDepth === depth) return 0; // Depth limit reached
+    if (currentDepth === depth) return 0; 
 
     if (isMaximizing) {
         let maxEval = -Infinity;
@@ -124,7 +131,7 @@ function minimax(cells, currentDepth, isMaximizing, depth, alpha, beta) {
                 cells[i].classList.remove(pc);
                 maxEval = Math.max(maxEval, eval);
                 alpha = Math.max(alpha, eval);
-                if (beta <= alpha) break; // Alpha-Beta pruning
+                if (beta <= alpha) break;
             }
         }
         return maxEval;
@@ -132,12 +139,12 @@ function minimax(cells, currentDepth, isMaximizing, depth, alpha, beta) {
         let minEval = Infinity;
         for (let i = 0; i < cells.length; i++) {
             if (!cells[i].classList.contains('x') && !cells[i].classList.contains('o')) {
-                cells[i].classList.add(palyer);
+                cells[i].classList.add(player);
                 const eval = minimax(cells, currentDepth + 1, true, depth, alpha, beta);
-                cells[i].classList.remove(palyer);
+                cells[i].classList.remove(player);
                 minEval = Math.min(minEval, eval);
                 beta = Math.min(beta, eval);
-                if (beta <= alpha) break; // Alpha-Beta pruning
+                if (beta <= alpha) break;
             }
         }
         return minEval;
@@ -159,8 +166,10 @@ function cellClicked(event){
 
     if (checkWin(xTurn ? 'x' : 'o')){
         endGame(xTurn ? 'x' : 'o')
+        return
     } else if (isDraw()){
         endGame('draw')
+        return
     }
 
     xTurn = !xTurn
@@ -187,14 +196,23 @@ function endGame(whoWins){
 }
 
 function draw(){
-    alert('d')
     winningMessageText.innerText = "Draw!"
 }
 
 
 function win(whoWins){
-    // alert(whoWins)
     winningMessageText.innerText = `${whoWins.toUpperCase()} Win!`
+    if (whoWins == player){
+        switch (difficulty) {
+            case 'easy':
+                score += 1
+            case 'medium':
+                score += 2
+            case 'hard':
+                score += 3
+        }
+        updateScore()
+    }
 
 }
 
@@ -205,4 +223,12 @@ function resetGame() {
     });
     menu.classList.remove('hidden');
     winningMessage.classList.remove('show')
+    }
+
+function updateScore(){
+    scoreLabel = document.querySelector('.score').innerText = `Current score: ${score}`
+    if (userData.achivment.maxTicTacToe < score){
+        userData.achivment.maxTicTacToe = score
+        localStorage.setItem(`user#${currentUserIndex}`, JSON.stringify(userData))
+    }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game World</title>
+    <link rel="stylesheet" href="../CSS/home.css">
+    <script type="text/javascript" src="../JS/home.js"></script>
+</head>
+
+<header>
+    <h1>Games World</h1>
+</header>
+
+<body>
+    <div id="containerLogIn" class="containerLogIn">
+        <h2>LOG IN</h2>
+        <form id="form1">
+            <div class="divUsername">
+                <input type="text" id="nameLogIn" maxlength="10" name="nameLogIn" placeholder="Enter user name"
+                    size="100" required><br>
+            </div>
+            <div class="divPassword">
+                <input type="password" id="passwordLogIn" name="passwordLogIn" placeholder="Enter password" size="100"
+                    minlength="8" maxlength="10" required><br>
+            </div>
+            <br>
+            <input class="inputButton" id="logIn" name="logIn" type="button" value="LOG IN">
+            <br>
+            <input class="inputButton" type="button" id="createAccount" name="createAccount" value="Create account"
+                onclick="switchVisible();">
+            <input class="inputButton" type="button" id="newPassword" value="Forgot your password?">
+            <br>
+            <br>
+        </form>
+    </div>    
+
+    <div id="containerSignUp">
+        <h2>SIGN UP</h2>
+        <form id="form2">
+            <input type="text" id="nameSignIn" maxlength="10" name="nameSignIn" placeholder="Choose a User Name"
+                size="100" required><br>
+            <input type="password" id="passwordSignIn" name="passwordSignIn" placeholder="Choose a Password" size="100"
+                minlength="8" maxlength="10" required>
+            <br>
+            <br>
+            <input id="signIn" name="signIn" class="inputButton" type="button" value="Sign up" formaction=""
+                onclick="switchVisible();">
+            <br>
+            <br>
+        </form>
+    </div>    
+
+    <div hidden id="containerForgot">
+        <h2>NEW PASSWORD</h2>
+        <form id="form3">
+            <input type="text" id="nameForgot" name="nameForgot" maxlength="10" placeholder="Enter your user name"
+                size="100" required><br>
+            <input type="password" id="passwordForgot" name="passwordForgot" placeholder="Enter new password" size="100"
+                min="8" max="10" required><br>
+            <input id="update" name="update" class="inputButton" type="button" value="Update">
+            <br>
+            <br>
+        </form>
+    </div>
+    <label id="message"></label>
+
+</body>
+</html>
